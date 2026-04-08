@@ -3,8 +3,7 @@ import { onlyDigits, safeUrl } from "@/utils/sanitize";
 
 // ─── Primitives ───────────────────────────────────────────────────────────────
 
-const requiredStr = (label: string) =>
-  z.string().min(1, `${label} é obrigatório`).max(200);
+const requiredStr = (label: string) => z.string().min(1, `${label} é obrigatório`).max(200);
 
 const optionalStr = (max = 200) => z.string().max(max).optional();
 

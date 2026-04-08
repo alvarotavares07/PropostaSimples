@@ -64,12 +64,7 @@ function ItemRow({
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.7fr)_90px_110px_130px_110px_120px]">
-        <FieldLabel
-          id={`item-desc-${item.id}`}
-          label="Descrição"
-          required
-          error={descriptionError}
-        >
+        <FieldLabel id={`item-desc-${item.id}`} label="Descrição" required error={descriptionError}>
           <Input
             id={`item-desc-${item.id}`}
             value={item.description}
@@ -169,7 +164,12 @@ function FieldLabel({
     <div>
       <label htmlFor={id} className="mb-1 block text-xs text-muted-foreground">
         {label}
-        {required ? <span className="text-destructive" aria-hidden> *</span> : null}
+        {required ? (
+          <span className="text-destructive" aria-hidden>
+            {" "}
+            *
+          </span>
+        ) : null}
       </label>
       {children}
       {error ? (
@@ -199,7 +199,8 @@ export function ItemsTable() {
             <p className="section-kicker">Composição comercial</p>
             <CardTitle className="text-lg">Itens da proposta</CardTitle>
             <p className="text-sm leading-6 text-muted-foreground">
-              Estruture os itens com clareza para facilitar a leitura do cliente e reforçar a percepção de organização.
+              Estruture os itens com clareza para facilitar a leitura do cliente e reforçar a
+              percepção de organização.
             </p>
           </div>
         </div>
@@ -214,8 +215,8 @@ export function ItemsTable() {
             <div>
               <p className="font-semibold text-foreground">Dica rápida para preencher sem travar</p>
               <p className="mt-1 leading-6">
-                Comece pela descrição do serviço principal. Os totais serão calculados automaticamente enquanto você
-                informa quantidade, valor unitário e desconto.
+                Comece pela descrição do serviço principal. Os totais serão calculados
+                automaticamente enquanto você informa quantidade, valor unitário e desconto.
               </p>
             </div>
           </div>
@@ -229,8 +230,8 @@ export function ItemsTable() {
             <div className="space-y-1">
               <p className="text-base font-semibold text-foreground">Nenhum item adicionado</p>
               <p className="max-w-md text-sm leading-6 text-muted-foreground">
-                Adicione o primeiro serviço ou produto. Os totais serão calculados automaticamente conforme você
-                preencher.
+                Adicione o primeiro serviço ou produto. Os totais serão calculados automaticamente
+                conforme você preencher.
               </p>
             </div>
             <Button

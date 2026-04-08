@@ -23,11 +23,13 @@ interface RowProps {
 
 function ProposalRow({ proposal: p, onLoad, onDelete }: RowProps) {
   return (
-    <tr className="border-b border-border/60 transition-colors hover:bg-muted/35 last:border-0">
+    <tr className="border-b border-border/60 transition-colors last:border-0 hover:bg-muted/35">
       <td className="px-4 py-4 text-sm font-semibold text-foreground">{p.meta.number}</td>
       <td className="px-4 py-4 text-sm text-muted-foreground">{p.proposal.title || "—"}</td>
       <td className="px-4 py-4 text-sm text-muted-foreground">{p.client.name || "—"}</td>
-      <td className="px-4 py-4 text-right text-sm font-semibold text-foreground">{formatBRL(p.totals.total)}</td>
+      <td className="px-4 py-4 text-right text-sm font-semibold text-foreground">
+        {formatBRL(p.totals.total)}
+      </td>
       <td className="px-4 py-4 text-sm text-muted-foreground">{isoToBR(p.meta.validityDate)}</td>
       <td className="px-4 py-4 text-sm text-muted-foreground">{formatDate(p.savedAt)}</td>
       <td className="px-4 py-4">
@@ -70,7 +72,8 @@ export function SavedProposalsTable() {
           <div className="space-y-1">
             <p className="text-lg font-semibold text-foreground">Nenhuma proposta salva ainda</p>
             <p className="max-w-xl text-sm leading-6 text-muted-foreground/80">
-              As propostas que você salvar ficarão disponíveis aqui para reabrir, editar e gerar novos PDFs com agilidade.
+              As propostas que você salvar ficarão disponíveis aqui para reabrir, editar e gerar
+              novos PDFs com agilidade.
             </p>
           </div>
         </CardContent>
@@ -92,13 +95,27 @@ export function SavedProposalsTable() {
         <table className="w-full text-left" aria-label="Propostas salvas">
           <thead>
             <tr className="border-b border-border/70 bg-background/70">
-              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Nº</th>
-              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Título</th>
-              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Cliente</th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground">Total</th>
-              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Validade</th>
-              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Salva em</th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ações</th>
+              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Nº
+              </th>
+              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Título
+              </th>
+              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Cliente
+              </th>
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Total
+              </th>
+              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Validade
+              </th>
+              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Salva em
+              </th>
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Ações
+              </th>
             </tr>
           </thead>
           <tbody>

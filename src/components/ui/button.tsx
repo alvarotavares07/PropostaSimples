@@ -8,10 +8,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-[0_14px_24px_-18px_hsl(var(--primary)/0.85)] hover:-translate-y-0.5 hover:bg-primary/95",
-        destructive: "bg-destructive text-destructive-foreground shadow-[0_14px_24px_-18px_hsl(var(--destructive)/0.85)] hover:-translate-y-0.5 hover:bg-destructive/92",
-        outline: "border border-border/80 bg-background/80 text-foreground shadow-[inset_0_1px_0_hsl(0_0%_100%/0.35)] hover:border-primary/30 hover:bg-accent/70 hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground shadow-[inset_0_1px_0_hsl(0_0%_100%/0.35)] hover:bg-secondary/85",
+        default:
+          "bg-primary text-primary-foreground shadow-[0_14px_24px_-18px_hsl(var(--primary)/0.85)] hover:-translate-y-0.5 hover:bg-primary/95",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-[0_14px_24px_-18px_hsl(var(--destructive)/0.85)] hover:-translate-y-0.5 hover:bg-destructive/92",
+        outline:
+          "border border-border/80 bg-background/80 text-foreground shadow-[inset_0_1px_0_hsl(0_0%_100%/0.35)] hover:border-primary/30 hover:bg-accent/70 hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-[inset_0_1px_0_hsl(0_0%_100%/0.35)] hover:bg-secondary/85",
         ghost: "text-muted-foreground hover:bg-accent/80 hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -30,8 +34,7 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
@@ -39,11 +42,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
+      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
     );
   },
 );

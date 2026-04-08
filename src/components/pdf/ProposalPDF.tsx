@@ -353,9 +353,7 @@ export function ProposalPDF({ proposal }: Props) {
             <View style={s.brandBlock}>
               <Text style={s.overline}>Proposta comercial</Text>
               <Text style={s.headerTitle}>{details.title || "Proposta Comercial"}</Text>
-              <Text style={s.headerSubtitle}>
-                {provider.name || "Prestador de Serviços"}
-              </Text>
+              <Text style={s.headerSubtitle}>{provider.name || "Prestador de Serviços"}</Text>
             </View>
 
             <View style={s.metaCard}>
@@ -366,7 +364,9 @@ export function ProposalPDF({ proposal }: Props) {
               <Text style={s.metaValue}>{isoToBR(meta.issueDate) || "—"}</Text>
 
               <Text style={s.metaLabel}>Validade</Text>
-              <Text style={[s.metaValue, { marginBottom: 0 }]}>{isoToBR(meta.validityDate) || "—"}</Text>
+              <Text style={[s.metaValue, { marginBottom: 0 }]}>
+                {isoToBR(meta.validityDate) || "—"}
+              </Text>
             </View>
           </View>
         </View>
@@ -377,19 +377,31 @@ export function ProposalPDF({ proposal }: Props) {
             <View style={s.row2}>
               <View style={[s.col, s.infoCard]}>
                 <Text style={s.partyName}>{provider.name || "—"}</Text>
-                {provider.cpfCnpj ? <Text style={s.partyDetail}>CPF/CNPJ: {provider.cpfCnpj}</Text> : null}
+                {provider.cpfCnpj ? (
+                  <Text style={s.partyDetail}>CPF/CNPJ: {provider.cpfCnpj}</Text>
+                ) : null}
                 {provider.im ? <Text style={s.partyDetail}>IM: {provider.im}</Text> : null}
-                {provider.email ? <Text style={s.partyDetail}>E-mail: {provider.email}</Text> : null}
-                {provider.phone ? <Text style={s.partyDetail}>Telefone: {provider.phone}</Text> : null}
-                {provider.address.street ? <Text style={s.partyDetail}>{partyAddress(provider.address)}</Text> : null}
+                {provider.email ? (
+                  <Text style={s.partyDetail}>E-mail: {provider.email}</Text>
+                ) : null}
+                {provider.phone ? (
+                  <Text style={s.partyDetail}>Telefone: {provider.phone}</Text>
+                ) : null}
+                {provider.address.street ? (
+                  <Text style={s.partyDetail}>{partyAddress(provider.address)}</Text>
+                ) : null}
               </View>
 
               <View style={[s.col, s.infoCard]}>
                 <Text style={s.partyName}>{client.name || "—"}</Text>
-                {client.cpfCnpj ? <Text style={s.partyDetail}>CPF/CNPJ: {client.cpfCnpj}</Text> : null}
+                {client.cpfCnpj ? (
+                  <Text style={s.partyDetail}>CPF/CNPJ: {client.cpfCnpj}</Text>
+                ) : null}
                 {client.email ? <Text style={s.partyDetail}>E-mail: {client.email}</Text> : null}
                 {client.phone ? <Text style={s.partyDetail}>Telefone: {client.phone}</Text> : null}
-                {client.address.street ? <Text style={s.partyDetail}>{partyAddress(client.address)}</Text> : null}
+                {client.address.street ? (
+                  <Text style={s.partyDetail}>{partyAddress(client.address)}</Text>
+                ) : null}
               </View>
             </View>
           </View>
@@ -452,7 +464,7 @@ export function ProposalPDF({ proposal }: Props) {
             </View>
           ) : null}
 
-          {(details.executionTime || details.payment || details.warranty) ? (
+          {details.executionTime || details.payment || details.warranty ? (
             <View style={s.section}>
               <SectionHeading title="Condições comerciais" />
               <View style={s.conditionGrid}>
@@ -500,7 +512,7 @@ export function ProposalPDF({ proposal }: Props) {
 
           {meta.placeAndDate ? <Text style={s.placeAndDate}>{meta.placeAndDate}</Text> : null}
 
-          {(details.signatures.providerName || details.signatures.clientName) ? (
+          {details.signatures.providerName || details.signatures.clientName ? (
             <View style={s.signatures}>
               {(["providerName", "clientName"] as const).map((key) => {
                 const name = details.signatures[key];
@@ -509,7 +521,9 @@ export function ProposalPDF({ proposal }: Props) {
                   <View key={key} style={s.signatureCol}>
                     <View style={s.signatureLine}>
                       <Text style={s.signatureName}>{name}</Text>
-                      <Text style={s.signatureRole}>{key === "providerName" ? "Prestador" : "Cliente"}</Text>
+                      <Text style={s.signatureRole}>
+                        {key === "providerName" ? "Prestador" : "Cliente"}
+                      </Text>
                     </View>
                   </View>
                 );
@@ -520,7 +534,10 @@ export function ProposalPDF({ proposal }: Props) {
 
         <View style={s.footer} fixed>
           <Text style={s.footerText}>PropostaSimples · Proposta nº {meta.number}</Text>
-          <Text style={s.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
+          <Text
+            style={s.pageNumber}
+            render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+          />
         </View>
       </Page>
     </Document>

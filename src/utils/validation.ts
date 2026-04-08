@@ -34,7 +34,10 @@ export function validateProposal(p: ProposalState): ValidationResult {
   } else {
     p.items.forEach((item, i) => {
       if (!item.description.trim()) {
-        errors.push({ field: `items.${i}.description`, message: `Item ${i + 1}: descrição obrigatória` });
+        errors.push({
+          field: `items.${i}.description`,
+          message: `Item ${i + 1}: descrição obrigatória`,
+        });
       }
       if (item.qty <= 0) {
         errors.push({ field: `items.${i}.qty`, message: `Item ${i + 1}: quantidade inválida` });

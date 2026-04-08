@@ -10,7 +10,16 @@ import {
   maskBRDate,
 } from "@/utils/sanitize";
 
-type MaskType = "text" | "multiline" | "cpfcnpj" | "phone" | "cep" | "uf" | "date" | "number" | "url";
+type MaskType =
+  | "text"
+  | "multiline"
+  | "cpfcnpj"
+  | "phone"
+  | "cep"
+  | "uf"
+  | "date"
+  | "number"
+  | "url";
 
 interface UseMaskedInputOptions {
   mask: MaskType;

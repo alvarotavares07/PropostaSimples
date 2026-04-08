@@ -50,7 +50,11 @@ function Field({ id, label, required, error, children, hint }: FieldProps) {
         )}
       </Label>
       {children}
-      {hint && <p id={`${id}-hint`} className="text-xs leading-5 text-muted-foreground">{hint}</p>}
+      {hint && (
+        <p id={`${id}-hint`} className="text-xs leading-5 text-muted-foreground">
+          {hint}
+        </p>
+      )}
       {error && (
         <p id={`${id}-error`} role="alert" className="text-xs text-destructive">
           {error}
@@ -204,11 +208,15 @@ function SectionProgress({
         <div
           className={
             status === "done"
-              ? "rounded-xl bg-emerald-500/12 p-2 text-emerald-600 dark:text-emerald-400"
+              ? "bg-emerald-500/12 rounded-xl p-2 text-emerald-600 dark:text-emerald-400"
               : "rounded-xl bg-primary/10 p-2 text-primary"
           }
         >
-          {status === "done" ? <CheckCircle2 className="h-4 w-4" aria-hidden /> : <CircleDashed className="h-4 w-4" aria-hidden />}
+          {status === "done" ? (
+            <CheckCircle2 className="h-4 w-4" aria-hidden />
+          ) : (
+            <CircleDashed className="h-4 w-4" aria-hidden />
+          )}
         </div>
         <div>
           <p className="text-sm font-semibold text-foreground">{title}</p>
@@ -244,14 +252,16 @@ export function ProposalForm() {
   });
 
   const providerReady = Boolean(
-    proposal.provider.name.trim() && proposal.provider.cpfCnpj.trim() && proposal.provider.email.trim(),
+    proposal.provider.name.trim() &&
+    proposal.provider.cpfCnpj.trim() &&
+    proposal.provider.email.trim(),
   );
   const clientReady = Boolean(proposal.client.name.trim() && proposal.client.cpfCnpj.trim());
   const commercialReady = Boolean(
     proposal.proposal.title.trim() &&
-      proposal.proposal.scope.trim() &&
-      proposal.proposal.executionTime.trim() &&
-      proposal.proposal.payment.trim(),
+    proposal.proposal.scope.trim() &&
+    proposal.proposal.executionTime.trim() &&
+    proposal.proposal.payment.trim(),
   );
   const proposalSummaryReady = providerReady && clientReady && commercialReady;
 
@@ -276,7 +286,9 @@ export function ProposalForm() {
   }
 
   function describedBy(id: string, error?: string, hint?: string) {
-    return [hint ? `${id}-hint` : "", error ? `${id}-error` : ""].filter(Boolean).join(" ") || undefined;
+    return (
+      [hint ? `${id}-hint` : "", error ? `${id}-error` : ""].filter(Boolean).join(" ") || undefined
+    );
   }
 
   function handleDateChange(field: "issueDate" | "validityDate", raw: string) {
@@ -326,11 +338,13 @@ export function ProposalForm() {
 
   const payLinkError = getFieldError("proposal.payLink", proposal.proposal.payLink ?? "");
   const canSuggestPlaceAndDate = Boolean(
-    proposal.provider.address.city.trim() && proposal.provider.address.uf.trim() && proposal.meta.issueDate,
+    proposal.provider.address.city.trim() &&
+    proposal.provider.address.uf.trim() &&
+    proposal.meta.issueDate,
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="animate-fade-in space-y-6">
       <Card className="surface-panel overflow-hidden">
         <CardContent className="space-y-5 p-5 md:p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -341,17 +355,22 @@ export function ProposalForm() {
                 </div>
                 <p className="section-kicker">Preenchimento guiado</p>
               </div>
-              <h2 className="text-xl font-semibold text-foreground">Monte sua proposta com mais clareza</h2>
+              <h2 className="text-xl font-semibold text-foreground">
+                Monte sua proposta com mais clareza
+              </h2>
               <p className="text-sm leading-6 text-muted-foreground">
-                Comece pelos dados de quem está prestando o serviço, depois preencha o cliente e finalize com os
-                detalhes comerciais. As datas já começam prontas e o número pode ser gerado depois, se você preferir.
+                Comece pelos dados de quem está prestando o serviço, depois preencha o cliente e
+                finalize com os detalhes comerciais. As datas já começam prontas e o número pode ser
+                gerado depois, se você preferir.
               </p>
             </div>
 
             <div className="rounded-2xl border border-border/70 bg-background/80 px-4 py-3 text-sm shadow-[inset_0_1px_0_hsl(0_0%_100%/0.4)] lg:min-w-[260px]">
               <p className="section-kicker">Situação atual</p>
               <p className="mt-2 text-xl font-semibold text-foreground">
-                {validation.isValid ? "Tudo pronto" : `${validation.errors.length} ponto(s) para revisar`}
+                {validation.isValid
+                  ? "Tudo pronto"
+                  : `${validation.errors.length} ponto(s) para revisar`}
               </p>
               <p className="mt-1 leading-6 text-muted-foreground">
                 Os campos essenciais aparecem destacados conforme você vai preenchendo.
@@ -397,7 +416,9 @@ export function ProposalForm() {
                 <Input
                   id="meta.number"
                   value={proposal.meta.number}
-                  onChange={(e) => dispatch({ type: "SET_META", payload: { number: e.target.value } })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_META", payload: { number: e.target.value } })
+                  }
                   onBlur={() => markTouched("meta.number")}
                   placeholder="Ex.: PS-20260408-001"
                   maxLength={30}
@@ -406,7 +427,9 @@ export function ProposalForm() {
                   type="button"
                   variant="outline"
                   size="icon"
-                  onClick={() => dispatch({ type: "SET_META", payload: { number: generateProposalNumber() } })}
+                  onClick={() =>
+                    dispatch({ type: "SET_META", payload: { number: generateProposalNumber() } })
+                  }
                   aria-label="Gerar número automático"
                   title="Gerar número automático"
                 >
@@ -424,7 +447,9 @@ export function ProposalForm() {
                 <Input
                   id="meta.placeAndDate"
                   value={proposal.meta.placeAndDate}
-                  onChange={(e) => dispatch({ type: "SET_META", payload: { placeAndDate: e.target.value } })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_META", payload: { placeAndDate: e.target.value } })
+                  }
                   placeholder="Belo Horizonte - MG, 01/01/2025"
                   maxLength={80}
                 />
@@ -461,7 +486,9 @@ export function ProposalForm() {
                   "meta.issueDate",
                   getFieldError("meta.issueDate", proposal.meta.issueDate),
                 )}
-                className={inputStateClass(getFieldError("meta.issueDate", proposal.meta.issueDate))}
+                className={inputStateClass(
+                  getFieldError("meta.issueDate", proposal.meta.issueDate),
+                )}
               />
             </Field>
 
@@ -480,20 +507,24 @@ export function ProposalForm() {
                 placeholder="DD/MM/AAAA"
                 inputMode="numeric"
                 maxLength={10}
-                aria-invalid={Boolean(getFieldError("meta.validityDate", proposal.meta.validityDate))}
+                aria-invalid={Boolean(
+                  getFieldError("meta.validityDate", proposal.meta.validityDate),
+                )}
                 aria-describedby={describedBy(
                   "meta.validityDate",
                   getFieldError("meta.validityDate", proposal.meta.validityDate),
                   "Recomendado para deixar claro até quando os valores e condições permanecem vigentes.",
                 )}
-                className={inputStateClass(getFieldError("meta.validityDate", proposal.meta.validityDate))}
+                className={inputStateClass(
+                  getFieldError("meta.validityDate", proposal.meta.validityDate),
+                )}
               />
             </Field>
           </div>
 
           <div className="rounded-2xl border border-border/70 bg-muted/25 px-4 py-3 text-sm leading-6 text-muted-foreground">
-            Uma numeração consistente facilita consultas futuras e passa mais organização ao cliente desde o primeiro
-            contato.
+            Uma numeração consistente facilita consultas futuras e passa mais organização ao cliente
+            desde o primeiro contato.
           </div>
         </CardContent>
       </Card>
@@ -508,23 +539,40 @@ export function ProposalForm() {
         <CardContent className="space-y-6">
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <Field id="provider.name" label="Nome / Razão Social" required error={getFieldError("provider.name", proposal.provider.name)}>
+              <Field
+                id="provider.name"
+                label="Nome / Razão Social"
+                required
+                error={getFieldError("provider.name", proposal.provider.name)}
+              >
                 <Input
                   id="provider.name"
                   value={proposal.provider.name}
-                  onChange={(e) => dispatch({ type: "SET_PROVIDER", payload: { name: e.target.value } })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_PROVIDER", payload: { name: e.target.value } })
+                  }
                   onBlur={() => markTouched("provider.name")}
                   placeholder="Seu nome ou sua empresa"
                   maxLength={120}
                   autoComplete="name"
                   aria-invalid={Boolean(getFieldError("provider.name", proposal.provider.name))}
-                  aria-describedby={describedBy("provider.name", getFieldError("provider.name", proposal.provider.name))}
-                  className={inputStateClass(getFieldError("provider.name", proposal.provider.name))}
+                  aria-describedby={describedBy(
+                    "provider.name",
+                    getFieldError("provider.name", proposal.provider.name),
+                  )}
+                  className={inputStateClass(
+                    getFieldError("provider.name", proposal.provider.name),
+                  )}
                 />
               </Field>
             </div>
 
-            <Field id="provider.cpfCnpj" label="CPF / CNPJ" required error={getFieldError("provider.cpfCnpj", proposal.provider.cpfCnpj)}>
+            <Field
+              id="provider.cpfCnpj"
+              label="CPF / CNPJ"
+              required
+              error={getFieldError("provider.cpfCnpj", proposal.provider.cpfCnpj)}
+            >
               <Input
                 id="provider.cpfCnpj"
                 value={proposal.provider.cpfCnpj}
@@ -538,7 +586,9 @@ export function ProposalForm() {
                   "provider.cpfCnpj",
                   getFieldError("provider.cpfCnpj", proposal.provider.cpfCnpj),
                 )}
-                className={inputStateClass(getFieldError("provider.cpfCnpj", proposal.provider.cpfCnpj))}
+                className={inputStateClass(
+                  getFieldError("provider.cpfCnpj", proposal.provider.cpfCnpj),
+                )}
               />
             </Field>
 
@@ -546,30 +596,48 @@ export function ProposalForm() {
               <Input
                 id="provider.im"
                 value={proposal.provider.im}
-                onChange={(e) => dispatch({ type: "SET_PROVIDER", payload: { im: e.target.value.slice(0, 20) } })}
+                onChange={(e) =>
+                  dispatch({ type: "SET_PROVIDER", payload: { im: e.target.value.slice(0, 20) } })
+                }
                 placeholder="000000"
                 inputMode="numeric"
                 maxLength={20}
               />
             </Field>
 
-            <Field id="provider.email" label="E-mail" required error={getFieldError("provider.email", proposal.provider.email)}>
+            <Field
+              id="provider.email"
+              label="E-mail"
+              required
+              error={getFieldError("provider.email", proposal.provider.email)}
+            >
               <Input
                 id="provider.email"
                 type="email"
                 value={proposal.provider.email}
-                onChange={(e) => dispatch({ type: "SET_PROVIDER", payload: { email: e.target.value } })}
+                onChange={(e) =>
+                  dispatch({ type: "SET_PROVIDER", payload: { email: e.target.value } })
+                }
                 onBlur={() => markTouched("provider.email")}
                 placeholder="seu@email.com"
                 autoComplete="email"
                 maxLength={120}
                 aria-invalid={Boolean(getFieldError("provider.email", proposal.provider.email))}
-                aria-describedby={describedBy("provider.email", getFieldError("provider.email", proposal.provider.email))}
-                className={inputStateClass(getFieldError("provider.email", proposal.provider.email))}
+                aria-describedby={describedBy(
+                  "provider.email",
+                  getFieldError("provider.email", proposal.provider.email),
+                )}
+                className={inputStateClass(
+                  getFieldError("provider.email", proposal.provider.email),
+                )}
               />
             </Field>
 
-            <Field id="provider.phone" label="Telefone" hint="Ajuda o cliente a confirmar detalhes com rapidez.">
+            <Field
+              id="provider.phone"
+              label="Telefone"
+              hint="Ajuda o cliente a confirmar detalhes com rapidez."
+            >
               <Input
                 id="provider.phone"
                 type="tel"
@@ -579,7 +647,11 @@ export function ProposalForm() {
                 inputMode="tel"
                 maxLength={15}
                 autoComplete="tel"
-                aria-describedby={describedBy("provider.phone", undefined, "Ajuda o cliente a confirmar detalhes com rapidez.")}
+                aria-describedby={describedBy(
+                  "provider.phone",
+                  undefined,
+                  "Ajuda o cliente a confirmar detalhes com rapidez.",
+                )}
               />
             </Field>
           </div>
@@ -587,7 +659,8 @@ export function ProposalForm() {
           <div className="rounded-2xl border border-border/70 bg-muted/20 p-4 md:p-5">
             <p className="section-kicker">Endereço do prestador</p>
             <p className="mb-4 mt-1 text-sm leading-6 text-muted-foreground">
-              Um endereço completo ajuda a formalizar melhor o documento e reforça a percepção de negócio estruturado.
+              Um endereço completo ajuda a formalizar melhor o documento e reforça a percepção de
+              negócio estruturado.
             </p>
             <AddressFields
               prefix="provider.address"
@@ -613,22 +686,37 @@ export function ProposalForm() {
         <CardContent className="space-y-6">
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <Field id="client.name" label="Nome / Razão Social" required error={getFieldError("client.name", proposal.client.name)}>
+              <Field
+                id="client.name"
+                label="Nome / Razão Social"
+                required
+                error={getFieldError("client.name", proposal.client.name)}
+              >
                 <Input
                   id="client.name"
                   value={proposal.client.name}
-                  onChange={(e) => dispatch({ type: "SET_CLIENT", payload: { name: e.target.value } })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_CLIENT", payload: { name: e.target.value } })
+                  }
                   onBlur={() => markTouched("client.name")}
                   placeholder="Nome do cliente"
                   maxLength={120}
                   aria-invalid={Boolean(getFieldError("client.name", proposal.client.name))}
-                  aria-describedby={describedBy("client.name", getFieldError("client.name", proposal.client.name))}
+                  aria-describedby={describedBy(
+                    "client.name",
+                    getFieldError("client.name", proposal.client.name),
+                  )}
                   className={inputStateClass(getFieldError("client.name", proposal.client.name))}
                 />
               </Field>
             </div>
 
-            <Field id="client.cpfCnpj" label="CPF / CNPJ" required error={getFieldError("client.cpfCnpj", proposal.client.cpfCnpj)}>
+            <Field
+              id="client.cpfCnpj"
+              label="CPF / CNPJ"
+              required
+              error={getFieldError("client.cpfCnpj", proposal.client.cpfCnpj)}
+            >
               <Input
                 id="client.cpfCnpj"
                 value={proposal.client.cpfCnpj}
@@ -638,8 +726,13 @@ export function ProposalForm() {
                 inputMode="numeric"
                 maxLength={18}
                 aria-invalid={Boolean(getFieldError("client.cpfCnpj", proposal.client.cpfCnpj))}
-                aria-describedby={describedBy("client.cpfCnpj", getFieldError("client.cpfCnpj", proposal.client.cpfCnpj))}
-                className={inputStateClass(getFieldError("client.cpfCnpj", proposal.client.cpfCnpj))}
+                aria-describedby={describedBy(
+                  "client.cpfCnpj",
+                  getFieldError("client.cpfCnpj", proposal.client.cpfCnpj),
+                )}
+                className={inputStateClass(
+                  getFieldError("client.cpfCnpj", proposal.client.cpfCnpj),
+                )}
               />
             </Field>
 
@@ -648,7 +741,9 @@ export function ProposalForm() {
                 id="client.email"
                 type="email"
                 value={proposal.client.email ?? ""}
-                onChange={(e) => dispatch({ type: "SET_CLIENT", payload: { email: e.target.value } })}
+                onChange={(e) =>
+                  dispatch({ type: "SET_CLIENT", payload: { email: e.target.value } })
+                }
                 placeholder="cliente@email.com"
                 autoComplete="email"
                 maxLength={120}
@@ -671,7 +766,8 @@ export function ProposalForm() {
           <div className="rounded-2xl border border-border/70 bg-muted/20 p-4 md:p-5">
             <p className="section-kicker">Endereço do cliente</p>
             <p className="mb-4 mt-1 text-sm leading-6 text-muted-foreground">
-              Esses dados deixam a proposta mais completa para aprovação e ajudam no registro formal do acordo.
+              Esses dados deixam a proposta mais completa para aprovação e ajudam no registro formal
+              do acordo.
             </p>
             <AddressFields
               prefix="client.address"
@@ -695,16 +791,26 @@ export function ProposalForm() {
           badge="Passo 4"
         />
         <CardContent className="space-y-6">
-          <Field id="proposal.title" label="Título da proposta" required error={getFieldError("proposal.title", proposal.proposal.title)}>
+          <Field
+            id="proposal.title"
+            label="Título da proposta"
+            required
+            error={getFieldError("proposal.title", proposal.proposal.title)}
+          >
             <Input
               id="proposal.title"
               value={proposal.proposal.title}
-              onChange={(e) => dispatch({ type: "SET_PROPOSAL", payload: { title: e.target.value } })}
+              onChange={(e) =>
+                dispatch({ type: "SET_PROPOSAL", payload: { title: e.target.value } })
+              }
               onBlur={() => markTouched("proposal.title")}
               placeholder="Ex.: Desenvolvimento de website institucional"
               maxLength={120}
               aria-invalid={Boolean(getFieldError("proposal.title", proposal.proposal.title))}
-              aria-describedby={describedBy("proposal.title", getFieldError("proposal.title", proposal.proposal.title))}
+              aria-describedby={describedBy(
+                "proposal.title",
+                getFieldError("proposal.title", proposal.proposal.title),
+              )}
               className={inputStateClass(getFieldError("proposal.title", proposal.proposal.title))}
             />
           </Field>
@@ -718,14 +824,19 @@ export function ProposalForm() {
             <Textarea
               id="proposal.scope"
               value={proposal.proposal.scope}
-              onChange={(e) => dispatch({ type: "SET_PROPOSAL", payload: { scope: e.target.value } })}
+              onChange={(e) =>
+                dispatch({ type: "SET_PROPOSAL", payload: { scope: e.target.value } })
+              }
               onBlur={() => markTouched("proposal.scope")}
               placeholder="Descreva detalhadamente os serviços que serão prestados..."
               rows={6}
               maxLength={2000}
               className={`resize-y ${inputStateClass(getFieldError("proposal.scope", proposal.proposal.scope))}`}
               aria-invalid={Boolean(getFieldError("proposal.scope", proposal.proposal.scope))}
-              aria-describedby={describedBy("proposal.scope", getFieldError("proposal.scope", proposal.proposal.scope))}
+              aria-describedby={describedBy(
+                "proposal.scope",
+                getFieldError("proposal.scope", proposal.proposal.scope),
+              )}
             />
             <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
               <span>Descreva entregáveis, limites, premissas e o que está incluso.</span>
@@ -743,16 +854,22 @@ export function ProposalForm() {
               <Input
                 id="proposal.executionTime"
                 value={proposal.proposal.executionTime}
-                onChange={(e) => dispatch({ type: "SET_PROPOSAL", payload: { executionTime: e.target.value } })}
+                onChange={(e) =>
+                  dispatch({ type: "SET_PROPOSAL", payload: { executionTime: e.target.value } })
+                }
                 onBlur={() => markTouched("proposal.executionTime")}
                 placeholder="Ex.: 30 dias úteis"
                 maxLength={80}
-                aria-invalid={Boolean(getFieldError("proposal.executionTime", proposal.proposal.executionTime))}
+                aria-invalid={Boolean(
+                  getFieldError("proposal.executionTime", proposal.proposal.executionTime),
+                )}
                 aria-describedby={describedBy(
                   "proposal.executionTime",
                   getFieldError("proposal.executionTime", proposal.proposal.executionTime),
                 )}
-                className={inputStateClass(getFieldError("proposal.executionTime", proposal.proposal.executionTime))}
+                className={inputStateClass(
+                  getFieldError("proposal.executionTime", proposal.proposal.executionTime),
+                )}
               />
             </Field>
 
@@ -765,13 +882,20 @@ export function ProposalForm() {
               <Input
                 id="proposal.payment"
                 value={proposal.proposal.payment}
-                onChange={(e) => dispatch({ type: "SET_PROPOSAL", payload: { payment: e.target.value } })}
+                onChange={(e) =>
+                  dispatch({ type: "SET_PROPOSAL", payload: { payment: e.target.value } })
+                }
                 onBlur={() => markTouched("proposal.payment")}
                 placeholder="Ex.: 50% no início, 50% na entrega"
                 maxLength={120}
                 aria-invalid={Boolean(getFieldError("proposal.payment", proposal.proposal.payment))}
-                aria-describedby={describedBy("proposal.payment", getFieldError("proposal.payment", proposal.proposal.payment))}
-                className={inputStateClass(getFieldError("proposal.payment", proposal.proposal.payment))}
+                aria-describedby={describedBy(
+                  "proposal.payment",
+                  getFieldError("proposal.payment", proposal.proposal.payment),
+                )}
+                className={inputStateClass(
+                  getFieldError("proposal.payment", proposal.proposal.payment),
+                )}
               />
             </Field>
           </div>
@@ -782,7 +906,9 @@ export function ProposalForm() {
                 <Input
                   id="proposal.warranty"
                   value={proposal.proposal.warranty ?? ""}
-                  onChange={(e) => dispatch({ type: "SET_PROPOSAL", payload: { warranty: e.target.value } })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_PROPOSAL", payload: { warranty: e.target.value } })
+                  }
                   placeholder="Ex.: 90 dias de garantia"
                   maxLength={200}
                 />
@@ -821,7 +947,9 @@ export function ProposalForm() {
                 <Textarea
                   id="proposal.notes"
                   value={proposal.proposal.notes ?? ""}
-                  onChange={(e) => dispatch({ type: "SET_PROPOSAL", payload: { notes: e.target.value } })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_PROPOSAL", payload: { notes: e.target.value } })
+                  }
                   placeholder="Informações adicionais, condições especiais, observações de escopo..."
                   rows={4}
                   maxLength={2000}
@@ -833,8 +961,8 @@ export function ProposalForm() {
             <div className="rounded-2xl border border-border/70 bg-muted/20 p-4 md:p-5">
               <p className="section-kicker">Assinaturas</p>
               <p className="mb-4 mt-1 text-sm leading-6 text-muted-foreground">
-                Se você quiser, pode reaproveitar automaticamente os nomes já informados acima e deixar o fechamento
-                mais formal.
+                Se você quiser, pode reaproveitar automaticamente os nomes já informados acima e
+                deixar o fechamento mais formal.
               </p>
 
               <div className="mb-4 flex flex-wrap gap-2">
@@ -859,7 +987,10 @@ export function ProposalForm() {
               </div>
 
               <div className="space-y-4">
-                <Field id="proposal.signatures.providerName" label="Nome do prestador para assinatura">
+                <Field
+                  id="proposal.signatures.providerName"
+                  label="Nome do prestador para assinatura"
+                >
                   <Input
                     id="proposal.signatures.providerName"
                     value={proposal.proposal.signatures.providerName ?? ""}
@@ -867,7 +998,10 @@ export function ProposalForm() {
                       dispatch({
                         type: "SET_PROPOSAL",
                         payload: {
-                          signatures: { ...proposal.proposal.signatures, providerName: e.target.value },
+                          signatures: {
+                            ...proposal.proposal.signatures,
+                            providerName: e.target.value,
+                          },
                         },
                       })
                     }
@@ -884,7 +1018,10 @@ export function ProposalForm() {
                       dispatch({
                         type: "SET_PROPOSAL",
                         payload: {
-                          signatures: { ...proposal.proposal.signatures, clientName: e.target.value },
+                          signatures: {
+                            ...proposal.proposal.signatures,
+                            clientName: e.target.value,
+                          },
                         },
                       })
                     }

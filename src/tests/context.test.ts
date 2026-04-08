@@ -75,7 +75,9 @@ describe("line total computation", () => {
 });
 
 describe("totals computation", () => {
-  function computeTotals(items: Array<{ qty: number; unitPrice: number; discountPct: number; lineTotal: number }>) {
+  function computeTotals(
+    items: Array<{ qty: number; unitPrice: number; discountPct: number; lineTotal: number }>,
+  ) {
     const subtotal = items.reduce((acc, i) => acc + i.qty * i.unitPrice, 0);
     const discount = items.reduce((acc, i) => acc + i.qty * i.unitPrice * (i.discountPct / 100), 0);
     const total = subtotal - discount;

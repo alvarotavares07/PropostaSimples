@@ -82,7 +82,10 @@ export function maskCEP(value: string): string {
 }
 
 export function maskUF(value: string): string {
-  return value.replace(/[^A-Za-z]/g, "").toUpperCase().slice(0, 2);
+  return value
+    .replace(/[^A-Za-z]/g, "")
+    .toUpperCase()
+    .slice(0, 2);
 }
 
 // ─── Date utilities ──────────────────────────────────────────────────────────
@@ -135,7 +138,10 @@ export function formatBRL(n: number): string {
 /** Parse user-typed BRL string (handles both "1.234,56" and "1234.56") */
 export function parseBRL(input: string): number {
   if (!input) return 0;
-  let s = input.toString().replace(/[R$\s]/gi, "").trim();
+  let s = input
+    .toString()
+    .replace(/[R$\s]/gi, "")
+    .trim();
   // pt-BR format: "1.234,56"
   if (s.includes(",") && !s.includes(".")) s = s.replace(/\./g, "").replace(",", ".");
   // mixed: "1.234,56" already handled; "1,234.56" (US) — strip commas

@@ -63,8 +63,8 @@ function WorkflowStep({
   description: string;
 }) {
   return (
-    <li className="flex items-start gap-3 rounded-2xl border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.08))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white/12 font-semibold text-white">
+    <li className="border-white/12 flex items-start gap-3 rounded-2xl border bg-[linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.08))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md">
+      <div className="bg-white/12 flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl font-semibold text-white">
         {number}
       </div>
       <div>
@@ -153,12 +153,27 @@ function ProposalWorkspaceContent() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <div className="mx-auto max-w-[1680px] px-4 py-6 md:px-6 md:py-8">
-        <header className="relative mb-8 overflow-hidden rounded-[2rem] border border-border/70 bg-card/92 shadow-elegant backdrop-blur-xl">
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f4b7a_0%,#315c87_56%,#3e678f_100%)]" aria-hidden />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_34%)]" aria-hidden />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.08))]" aria-hidden />
-          <div className="absolute right-[-12%] top-[-24%] h-72 w-72 rounded-full bg-white/8 blur-3xl" aria-hidden />
-          <div className="absolute bottom-[-30%] left-[-8%] h-60 w-60 rounded-full bg-[#9db7cf]/12 blur-3xl" aria-hidden />
+        <header className="bg-card/92 relative mb-8 overflow-hidden rounded-[2rem] border border-border/70 shadow-elegant backdrop-blur-xl">
+          <div
+            className="absolute inset-0 bg-[linear-gradient(135deg,#1f4b7a_0%,#315c87_56%,#3e678f_100%)]"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_34%)]"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.08))]"
+            aria-hidden
+          />
+          <div
+            className="bg-white/8 absolute right-[-12%] top-[-24%] h-72 w-72 rounded-full blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="bg-[#9db7cf]/12 absolute bottom-[-30%] left-[-8%] h-60 w-60 rounded-full blur-3xl"
+            aria-hidden
+          />
 
           <div className="relative px-6 py-6 md:px-8 md:py-8 xl:px-10">
             <div className="mb-8 flex items-center justify-between gap-4">
@@ -176,14 +191,15 @@ function ProposalWorkspaceContent() {
             <div className="grid gap-8 xl:grid-cols-[minmax(0,1.15fr)_420px] xl:items-start">
               <div className="space-y-6">
                 <div className="max-w-3xl space-y-4">
-                  <p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/62">
+                  <p className="text-white/62 text-sm font-semibold uppercase tracking-[0.22em]">
                     Propostas comerciais com mais clareza e presença
                   </p>
                   <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-5xl">
                     Crie propostas profissionais com rapidez, organização e confiança.
                   </h1>
-                  <p className="max-w-2xl text-base leading-7 text-white/74 md:text-lg">
-                    Preencha seus dados, monte os itens, revise o documento em tempo real e gere um PDF com aparência sólida para apresentar ao cliente.
+                  <p className="text-white/74 max-w-2xl text-base leading-7 md:text-lg">
+                    Preencha seus dados, monte os itens, revise o documento em tempo real e gere um
+                    PDF com aparência sólida para apresentar ao cliente.
                   </p>
                 </div>
 
@@ -207,7 +223,7 @@ function ProposalWorkspaceContent() {
               </div>
 
               <div className="rounded-[1.6rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.08))] p-5 backdrop-blur-md">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/62">
+                <p className="text-white/62 text-sm font-semibold uppercase tracking-[0.18em]">
                   Como funciona
                 </p>
                 <ol className="mt-4 space-y-3">
@@ -250,7 +266,10 @@ function ProposalWorkspaceContent() {
                     <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
                       {validation.errors.slice(0, 3).map((error) => (
                         <li key={error.field} className="flex gap-2">
-                          <span className="mt-[0.45rem] h-1.5 w-1.5 rounded-full bg-primary/55" aria-hidden />
+                          <span
+                            className="mt-[0.45rem] h-1.5 w-1.5 rounded-full bg-primary/55"
+                            aria-hidden
+                          />
                           <span>{error.message}</span>
                         </li>
                       ))}
@@ -290,7 +309,8 @@ function ProposalWorkspaceContent() {
                 <p className="section-kicker">Fechamento</p>
                 <h2 className="mt-1 text-lg font-semibold text-foreground">Salvar e exportar</h2>
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Finalize a proposta com segurança, preserve o rascunho e gere a versão em PDF quando estiver satisfeito com a revisão.
+                  Finalize a proposta com segurança, preserve o rascunho e gere a versão em PDF
+                  quando estiver satisfeito com a revisão.
                 </p>
               </CardContent>
 
@@ -304,7 +324,8 @@ function ProposalWorkspaceContent() {
                     <div>
                       <p className="font-semibold">Existem campos que ainda precisam de atenção.</p>
                       <p className="mt-1 leading-6">
-                        Você ainda pode salvar a proposta, mas o documento ficará incompleto em pontos importantes.
+                        Você ainda pode salvar a proposta, mas o documento ficará incompleto em
+                        pontos importantes.
                       </p>
                     </div>
                   </div>
@@ -318,10 +339,13 @@ function ProposalWorkspaceContent() {
                     <Clock3 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                     <div>
                       <p className="font-semibold">
-                        {daysLeft === 0 ? "A proposta vence hoje." : `A proposta vence em ${daysLeft} dia(s).`}
+                        {daysLeft === 0
+                          ? "A proposta vence hoje."
+                          : `A proposta vence em ${daysLeft} dia(s).`}
                       </p>
                       <p className="mt-1 leading-6">
-                        Revise os dados antes de compartilhar para evitar enviar uma versão próxima do vencimento.
+                        Revise os dados antes de compartilhar para evitar enviar uma versão próxima
+                        do vencimento.
                       </p>
                     </div>
                   </div>
@@ -365,7 +389,10 @@ function ProposalWorkspaceContent() {
             </Card>
           </main>
 
-          <aside className="space-y-6 xl:sticky xl:top-6 xl:self-start" aria-label="Prévia da proposta">
+          <aside
+            className="space-y-6 xl:sticky xl:top-6 xl:self-start"
+            aria-label="Prévia da proposta"
+          >
             <Card className="overflow-hidden">
               <CardContent className="border-b border-border/70 bg-muted/20 px-6 py-5">
                 <div className="flex items-center justify-between gap-3">
@@ -373,10 +400,13 @@ function ProposalWorkspaceContent() {
                     <p className="section-kicker">Documento</p>
                     <div className="mt-1 flex items-center gap-2">
                       <Sparkles className="h-5 w-5 text-primary" aria-hidden />
-                      <h2 className="text-lg font-semibold text-foreground">Prévia em tempo real</h2>
+                      <h2 className="text-lg font-semibold text-foreground">
+                        Prévia em tempo real
+                      </h2>
                     </div>
                     <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                      Use esta área para revisar a aparência final do documento antes de salvar ou exportar.
+                      Use esta área para revisar a aparência final do documento antes de salvar ou
+                      exportar.
                     </p>
                   </div>
                   {validation.isValid ? (
@@ -394,7 +424,9 @@ function ProposalWorkspaceContent() {
                 <div className="rounded-[1.5rem] border border-border/70 bg-[linear-gradient(180deg,rgba(31,75,122,0.05),rgba(255,255,255,0.92))] p-3">
                   <div className="mb-3 flex items-center justify-between rounded-2xl border border-border/70 bg-background/80 px-4 py-2.5 text-xs text-muted-foreground">
                     <span>Visualização do documento</span>
-                    <span className="font-medium text-foreground">{proposal.meta.number || "Sem número"}</span>
+                    <span className="font-medium text-foreground">
+                      {proposal.meta.number || "Sem número"}
+                    </span>
                   </div>
                   <div className="max-h-[58vh] overflow-y-auto rounded-[1.2rem] border border-[#cfd9e4] bg-white shadow-[0_28px_60px_-38px_rgba(15,23,42,0.35)] sm:max-h-[64vh] xl:max-h-[78vh]">
                     <ProposalPreview />
@@ -421,7 +453,8 @@ function ProposalWorkspaceContent() {
               Propostas salvas
             </h2>
             <p className="mt-1 text-sm leading-6 text-muted-foreground">
-              Mantenha um histórico de documentos para reaproveitar informações e acelerar novas negociações.
+              Mantenha um histórico de documentos para reaproveitar informações e acelerar novas
+              negociações.
             </p>
           </div>
           <SavedProposalsTable />
@@ -431,7 +464,10 @@ function ProposalWorkspaceContent() {
 
         <footer className="mt-12 border-t border-border/70 py-6 text-center text-sm text-muted-foreground">
           <p>PropostaSimples · uma forma mais organizada de apresentar propostas comerciais.</p>
-          <p className="mt-1">Os dados permanecem apenas no seu navegador. Nenhuma informação é enviada para servidores.</p>
+          <p className="mt-1">
+            Os dados permanecem apenas no seu navegador. Nenhuma informação é enviada para
+            servidores.
+          </p>
         </footer>
       </div>
     </div>

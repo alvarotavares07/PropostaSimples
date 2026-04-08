@@ -178,8 +178,8 @@ export function ProposalProvider({ children }: { children: React.ReactNode }) {
     () => storage.loadDraft() ?? createEmptyProposal(),
   );
 
-  const [savedProposals, setSavedProposals] = React.useState<SavedProposal[]>(
-    () => storage.listProposals(),
+  const [savedProposals, setSavedProposals] = React.useState<SavedProposal[]>(() =>
+    storage.listProposals(),
   );
 
   const refreshSaved = useCallback(() => {
@@ -211,16 +211,13 @@ export function ProposalProvider({ children }: { children: React.ReactNode }) {
     return saved;
   }, [proposal, refreshSaved]);
 
-  const loadProposalFn = useCallback(
-    (id: string) => {
-      const p = storage.loadProposal(id);
-      if (p) {
-        dispatch({ type: "LOAD", payload: p });
-        storage.saveDraft(p);
-      }
-    },
-    [],
-  );
+  const loadProposalFn = useCallback((id: string) => {
+    const p = storage.loadProposal(id);
+    if (p) {
+      dispatch({ type: "LOAD", payload: p });
+      storage.saveDraft(p);
+    }
+  }, []);
 
   const deleteSavedProposal = useCallback(
     (id: string) => {

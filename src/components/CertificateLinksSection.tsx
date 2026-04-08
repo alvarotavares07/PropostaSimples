@@ -91,7 +91,10 @@ function ExternalResourceLink({ href, label }: LinkItem) {
       )}
       aria-label={`${label} (abre em nova aba)`}
     >
-      <ExternalLink className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" aria-hidden />
+      <ExternalLink
+        className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
+        aria-hidden
+      />
       <span className="leading-6">{label}</span>
     </a>
   );
@@ -108,11 +111,15 @@ export function CertificateLinksSection() {
             </div>
             <div className="space-y-1">
               <p className="section-kicker">Apoio operacional</p>
-              <h2 id="cert-links-heading" className="font-display text-2xl font-bold tracking-tight text-foreground">
+              <h2
+                id="cert-links-heading"
+                className="font-display text-2xl font-bold tracking-tight text-foreground"
+              >
                 Links úteis para emissão de certidões
               </h2>
               <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
-                Acesse portais oficiais para emitir comprovantes, certidões e consultas úteis ao dia a dia do MEI. Todos os links abrem em nova aba.
+                Acesse portais oficiais para emitir comprovantes, certidões e consultas úteis ao dia
+                a dia do MEI. Todos os links abrem em nova aba.
               </p>
             </div>
           </div>
@@ -125,7 +132,8 @@ export function CertificateLinksSection() {
               <div>
                 <p className="font-semibold text-foreground">Curadoria com foco em confiança</p>
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Esta área centraliza atalhos úteis para reduzir atrito operacional e deixar a rotina comercial mais ágil sem sair do produto.
+                  Esta área centraliza atalhos úteis para reduzir atrito operacional e deixar a
+                  rotina comercial mais ágil sem sair do produto.
                 </p>
               </div>
             </div>

@@ -18,7 +18,7 @@ export function ProposalPreview() {
             <h1 className="text-xl font-bold uppercase tracking-wider">
               {details.title || "Proposta Comercial"}
             </h1>
-            <p className="mt-1 text-[#d8e4ef] text-xs">
+            <p className="mt-1 text-xs text-[#d8e4ef]">
               {provider.name || "Prestador de Serviços"}
             </p>
           </div>
@@ -30,7 +30,7 @@ export function ProposalPreview() {
         </div>
       </header>
 
-      <div className="px-8 py-6 space-y-6">
+      <div className="space-y-6 px-8 py-6">
         {/* Parties */}
         <div className="grid grid-cols-2 gap-6">
           {/* Provider */}
@@ -83,7 +83,7 @@ export function ProposalPreview() {
             <h2 className="mb-2 border-b border-[#1f4b7a]/20 pb-1 text-[9px] font-bold uppercase tracking-widest text-[#1f4b7a]">
               Escopo dos Serviços
             </h2>
-            <p className="text-[10px] whitespace-pre-wrap leading-relaxed">{details.scope}</p>
+            <p className="whitespace-pre-wrap text-[10px] leading-relaxed">{details.scope}</p>
           </section>
         )}
 
@@ -96,32 +96,34 @@ export function ProposalPreview() {
             <table className="w-full text-[10px]">
               <thead>
                 <tr className="bg-[#1f4b7a]/10">
-                  <th className="py-1.5 px-2 text-left font-semibold">Descrição</th>
-                  <th className="py-1.5 px-2 text-center font-semibold">Qtd.</th>
-                  <th className="py-1.5 px-2 text-center font-semibold">Un.</th>
-                  <th className="py-1.5 px-2 text-right font-semibold">Preço Un.</th>
-                  <th className="py-1.5 px-2 text-right font-semibold">Desc.</th>
-                  <th className="py-1.5 px-2 text-right font-semibold">Total</th>
+                  <th className="px-2 py-1.5 text-left font-semibold">Descrição</th>
+                  <th className="px-2 py-1.5 text-center font-semibold">Qtd.</th>
+                  <th className="px-2 py-1.5 text-center font-semibold">Un.</th>
+                  <th className="px-2 py-1.5 text-right font-semibold">Preço Un.</th>
+                  <th className="px-2 py-1.5 text-right font-semibold">Desc.</th>
+                  <th className="px-2 py-1.5 text-right font-semibold">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {items.map((item, i) => (
                   <tr key={item.id} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                    <td className="py-1.5 px-2">{item.description}</td>
-                    <td className="py-1.5 px-2 text-center">{item.qty}</td>
-                    <td className="py-1.5 px-2 text-center">{item.unit || "un"}</td>
-                    <td className="py-1.5 px-2 text-right">{formatBRL(item.unitPrice)}</td>
-                    <td className="py-1.5 px-2 text-right">
+                    <td className="px-2 py-1.5">{item.description}</td>
+                    <td className="px-2 py-1.5 text-center">{item.qty}</td>
+                    <td className="px-2 py-1.5 text-center">{item.unit || "un"}</td>
+                    <td className="px-2 py-1.5 text-right">{formatBRL(item.unitPrice)}</td>
+                    <td className="px-2 py-1.5 text-right">
                       {item.discountPct > 0 ? `${item.discountPct}%` : "—"}
                     </td>
-                    <td className="py-1.5 px-2 text-right font-semibold">{formatBRL(item.lineTotal)}</td>
+                    <td className="px-2 py-1.5 text-right font-semibold">
+                      {formatBRL(item.lineTotal)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
             {/* Totals */}
-            <div className="mt-2 ml-auto w-48 space-y-1 text-[10px]">
+            <div className="ml-auto mt-2 w-48 space-y-1 text-[10px]">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal</span>
                 <span>{formatBRL(totals.subtotal)}</span>
@@ -175,7 +177,7 @@ export function ProposalPreview() {
             <h2 className="mb-2 border-b border-[#1f4b7a]/20 pb-1 text-[9px] font-bold uppercase tracking-widest text-[#1f4b7a]">
               Observações
             </h2>
-            <p className="text-[10px] whitespace-pre-wrap">{details.notes}</p>
+            <p className="whitespace-pre-wrap text-[10px]">{details.notes}</p>
           </section>
         )}
 
@@ -204,7 +206,9 @@ export function ProposalPreview() {
                 <div key={key} className="text-center text-[10px]">
                   <div className="mb-1 border-t border-gray-400 pt-1">
                     <p className="font-semibold">{name}</p>
-                    <p className="text-gray-500">{key === "providerName" ? "Prestador" : "Cliente"}</p>
+                    <p className="text-gray-500">
+                      {key === "providerName" ? "Prestador" : "Cliente"}
+                    </p>
                   </div>
                 </div>
               );
