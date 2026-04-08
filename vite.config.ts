@@ -5,9 +5,9 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   // IMPORTANT: Set this to your GitHub repo name for GitHub Pages deployment
-  // e.g. if repo is github.com/username/proposta-simples → base: '/proposta-simples/'
+  // e.g. if repo is github.com/username/PropostaSimples → base: '/PropostaSimples/'
   // For custom domain or root deploy: base: '/'
-  base: mode === "production" ? "/proposta-simples/" : "/",
+  base: mode === "production" ? "/PropostaSimples/" : "/",
 
   server: {
     host: "localhost",
