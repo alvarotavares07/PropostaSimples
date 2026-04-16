@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createEmptyProposal } from "@/context/ProposalContext";
+import { toLocalISODate } from "@/utils/sanitize";
 
 // We test the reducer logic by importing createEmptyProposal and simulating actions.
 // The full reducer is tested indirectly; we focus on computed totals correctness.
@@ -28,7 +29,7 @@ describe("createEmptyProposal", () => {
 
   it("has today as issueDate", () => {
     const p = createEmptyProposal();
-    const today = new Date().toISOString().slice(0, 10);
+    const today = toLocalISODate(new Date());
     expect(p.meta.issueDate).toBe(today);
   });
 

@@ -109,6 +109,33 @@ test.describe("PropostaSimples — fluxo principal", () => {
     await expect(page.getByLabel(/nome \/ razão social/i).first()).toHaveValue("Não deve sumir");
   });
 
+  test("limpar remove também as propostas salvas do navegador", async ({ page }) => {
+    page.on("dialog", (dialog) => dialog.accept());
+
+    await page.getByLabel(/número da proposta/i).fill("PS-PRIV-001");
+    await page.getByLabel(/nome \/ razão social/i).first().fill("Prestador");
+    await page.getByLabel(/cpf \/ cnpj/i).first().fill("12345678901");
+    await page.getByLabel(/e-mail/i).first().fill("prestador@teste.com");
+    await page.getByLabel(/nome \/ razão social/i).nth(1).fill("Cliente");
+    await page.getByLabel(/cpf \/ cnpj/i).nth(1).fill("12345678901");
+    await page.getByLabel(/título da proposta/i).fill("Proposta Privada");
+    await page.getByLabel(/escopo dos serviços/i).fill("Escopo completo.");
+    await page.getByLabel(/prazo de execução/i).fill("30 dias");
+    await page.getByLabel(/condições de pagamento/i).fill("À vista");
+    await page.getByLabel(/descrição do item 1/i).fill("Item");
+    await page.getByLabel(/quantidade do item 1/i).fill("1");
+    await page.getByLabel(/preço unitário do item 1/i).fill("100");
+
+    await page.getByRole("button", { name: /salvar proposta/i }).click();
+    await expect(page.getByRole("cell", { name: "PS-PRIV-001", exact: true })).toBeVisible();
+
+    await page.getByRole("button", { name: /limpar/i }).click();
+    await page.reload();
+
+    await expect(page.getByText(/nenhuma proposta salva ainda/i)).toBeVisible();
+    await expect(page.getByRole("cell", { name: "PS-PRIV-001", exact: true })).toHaveCount(0);
+  });
+
   test("404 page renderiza corretamente", async ({ page }) => {
     await page.goto(`${BASE}/pagina-inexistente`);
     await expect(page.getByRole("heading", { name: "404" })).toBeVisible();

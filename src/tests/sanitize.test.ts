@@ -15,6 +15,8 @@ import {
   normMultiline,
   generateProposalNumber,
   daysUntil,
+  toLocalISODate,
+  addDaysToLocalISODate,
 } from "@/utils/sanitize";
 
 describe("onlyDigits", () => {
@@ -99,6 +101,7 @@ describe("safeUrl", () => {
   it("allows https", () => expect(safeUrl("https://pagamento.com")).toBe("https://pagamento.com"));
   it("rejects http", () => expect(safeUrl("http://evil.com")).toBe(""));
   it("rejects javascript:", () => expect(safeUrl("javascript:alert(1)")).toBe(""));
+  it("rejects malformed https URL", () => expect(safeUrl("https://")).toBe(""));
   it("handles empty", () => expect(safeUrl("")).toBe(""));
 });
 
@@ -123,17 +126,29 @@ describe("generateProposalNumber", () => {
   });
 });
 
+describe("local ISO date helpers", () => {
+  it("formats local date without UTC drift", () => {
+    const date = new Date(2025, 0, 5, 23, 45, 0);
+    expect(toLocalISODate(date)).toBe("2025-01-05");
+  });
+
+  it("adds days in local time", () => {
+    const date = new Date(2025, 0, 5, 23, 45, 0);
+    expect(addDaysToLocalISODate(date, 30)).toBe("2025-02-04");
+  });
+});
+
 describe("daysUntil", () => {
   it("returns 0 for today", () => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = toLocalISODate(new Date());
     expect(daysUntil(today)).toBe(0);
   });
   it("returns positive for future date", () => {
-    const future = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
+    const future = addDaysToLocalISODate(new Date(), 7);
     expect(daysUntil(future)).toBe(7);
   });
   it("returns negative for past date", () => {
-    const past = new Date(Date.now() - 7 * 86_400_000).toISOString().slice(0, 10);
+    const past = addDaysToLocalISODate(new Date(), -7);
     expect(daysUntil(past)).toBe(-7);
   });
 });

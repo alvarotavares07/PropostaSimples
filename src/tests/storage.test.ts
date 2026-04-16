@@ -34,6 +34,7 @@ const {
   saveProposal,
   listProposals,
   deleteProposal,
+  clearProposals,
   loadProposal,
 } = await import("@/services/storage");
 
@@ -110,6 +111,13 @@ describe("storage service", () => {
       const list = listProposals();
       expect(list).toHaveLength(1);
       expect(list[0].id).not.toBe(s1.id);
+    });
+
+    it("clears all saved proposals", () => {
+      saveProposal(createEmptyProposal());
+      saveProposal(createEmptyProposal());
+      clearProposals();
+      expect(listProposals()).toEqual([]);
     });
   });
 });

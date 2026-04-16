@@ -131,11 +131,43 @@ describe("validateProposal", () => {
     expect(result.errors.some((e) => e.field === "proposal.payLink")).toBe(true);
   });
 
+  it("fails when payLink is malformed even with https", () => {
+    const p = makeValidProposal();
+    p.proposal.payLink = "https://";
+    const result = validateProposal(p);
+    expect(result.isValid).toBe(false);
+    expect(result.errors.some((e) => e.field === "proposal.payLink")).toBe(true);
+  });
+
   it("passes when payLink is https", () => {
     const p = makeValidProposal();
     p.proposal.payLink = "https://pagamento.com/link";
     const result = validateProposal(p);
     expect(result.isValid).toBe(true);
+  });
+
+  it("fails when validity date is before issue date", () => {
+    const p = makeValidProposal();
+    p.meta.validityDate = "2024-12-31";
+    const result = validateProposal(p);
+    expect(result.isValid).toBe(false);
+    expect(result.errors.some((e) => e.field === "meta.validityDate")).toBe(true);
+  });
+
+  it("fails when provider email is invalid", () => {
+    const p = makeValidProposal();
+    p.provider.email = "invalido";
+    const result = validateProposal(p);
+    expect(result.isValid).toBe(false);
+    expect(result.errors.some((e) => e.field === "provider.email")).toBe(true);
+  });
+
+  it("fails when provider CPF/CNPJ is invalid", () => {
+    const p = makeValidProposal();
+    p.provider.cpfCnpj = "123.456.789-01";
+    const result = validateProposal(p);
+    expect(result.isValid).toBe(false);
+    expect(result.errors.some((e) => e.field === "provider.cpfCnpj")).toBe(true);
   });
 
   it("accumulates multiple errors", () => {

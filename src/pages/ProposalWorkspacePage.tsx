@@ -144,9 +144,13 @@ function ProposalWorkspaceContent() {
   }
 
   function handleReset() {
-    if (window.confirm("Limpar todos os dados do formulário?")) {
+    if (
+      window.confirm(
+        "Limpar todos os dados do formulário e remover as propostas salvas deste navegador?",
+      )
+    ) {
       resetProposal();
-      toast.info("Formulário limpo.");
+      toast.info("Dados locais removidos deste navegador.");
     }
   }
 

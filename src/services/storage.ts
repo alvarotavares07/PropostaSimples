@@ -70,6 +70,14 @@ export function deleteProposal(id: string): void {
   safeSet(KEYS.proposals, proposals);
 }
 
+export function clearProposals(): void {
+  try {
+    localStorage.removeItem(KEYS.proposals);
+  } catch {
+    // ignore
+  }
+}
+
 export function loadProposal(id: string): SavedProposal | null {
   return listProposals().find((p) => p.id === id) ?? null;
 }

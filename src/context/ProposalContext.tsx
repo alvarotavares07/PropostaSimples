@@ -1,18 +1,16 @@
 import React, { createContext, useCallback, useContext, useReducer } from "react";
 import type { ProposalState, ProposalItem, SavedProposal } from "@/types/proposal";
 import * as storage from "@/services/storage";
-import { generateProposalNumber } from "@/utils/sanitize";
+import { addDaysToLocalISODate, generateProposalNumber, toLocalISODate } from "@/utils/sanitize";
 
 // ─── Initial State ────────────────────────────────────────────────────────────
 
 function today(): string {
-  return new Date().toISOString().slice(0, 10);
+  return toLocalISODate(new Date());
 }
 
 function defaultValidity(): string {
-  const d = new Date();
-  d.setDate(d.getDate() + 30);
-  return d.toISOString().slice(0, 10);
+  return addDaysToLocalISODate(new Date(), 30);
 }
 
 export function createEmptyProposal(): ProposalState {
@@ -188,6 +186,8 @@ export function ProposalProvider({ children }: { children: React.ReactNode }) {
 
   const resetProposal = useCallback(() => {
     storage.clearDraft();
+    storage.clearProposals();
+    setSavedProposals([]);
     dispatch({ type: "RESET" });
   }, []);
 

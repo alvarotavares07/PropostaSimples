@@ -45,7 +45,12 @@ export function onlyDigits(s: string): string {
 export function safeUrl(s: string): string {
   if (!s) return "";
   const t = s.trim();
-  return t.startsWith("https://") ? t : "";
+  try {
+    const url = new URL(t);
+    return url.protocol === "https:" && url.hostname ? t : "";
+  } catch {
+    return "";
+  }
 }
 
 // ─── Masks ───────────────────────────────────────────────────────────────────
@@ -121,6 +126,19 @@ export function isoToBR(iso?: string): string {
   return `${d}/${m}/${y}`;
 }
 
+export function toLocalISODate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+export function addDaysToLocalISODate(date: Date, days: number): string {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return toLocalISODate(next);
+}
+
 export function daysUntil(isoDate: string): number {
   const [y, m, d] = isoDate.split("-").map(Number);
   const target = Date.UTC(y, m - 1, d);
@@ -155,7 +173,7 @@ export function parseBRL(input: string): number {
 
 export function generateProposalNumber(): string {
   const now = new Date();
-  const yyyymmdd = now.toISOString().slice(0, 10).replace(/-/g, "");
+  const yyyymmdd = toLocalISODate(now).replace(/-/g, "");
   const seq = String(Math.floor(Math.random() * 999) + 1).padStart(3, "0");
   return `PS-${yyyymmdd}-${seq}`;
 }

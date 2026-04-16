@@ -1,30 +1,29 @@
 # PropostaSimples
 
-Aplicação web para criação de propostas comerciais voltada a micro e pequenos prestadores de serviço, com foco em clareza operacional, aparência profissional e geração rápida de PDF.
+Aplicação web para criar propostas comerciais com aparência profissional, prévia em tempo real e exportação em PDF, pensada para MEIs e pequenos prestadores de serviço.
 
-O produto permite preencher dados do prestador e do cliente, organizar itens da proposta, revisar o documento em tempo real, salvar propostas localmente no navegador e exportar uma versão final em PDF.
+O projeto foi construído para funcionar 100% no navegador, sem backend. Os dados ficam no dispositivo do usuário, e o fluxo prioriza rapidez, clareza operacional e uma entrega visualmente sólida.
 
-## Visão Geral
+## O que a aplicação faz
 
-Este projeto foi construído como uma interface de produto real, não apenas como formulário funcional. A aplicação prioriza:
+- cadastra dados do prestador e do cliente
+- organiza itens da proposta com quantidade, valor unitário e desconto
+- calcula subtotal, descontos e total automaticamente
+- mostra uma prévia do documento em tempo real
+- gera PDF diretamente no navegador
+- salva rascunhos localmente para continuidade do preenchimento
+- mantém histórico local de propostas salvas
+- permite limpar os dados locais do navegador quando necessário
+- oferece links úteis para emissão de certidões e consultas operacionais
 
-- experiência simples para usuários leigos
-- prévia em tempo real do documento
-- persistência local sem backend
-- exportação de PDF com identidade visual própria
-- fluxo validado com testes unitários e E2E
+## Principais características
 
-## Principais Funcionalidades
-
-- cadastro de dados do prestador e do cliente
-- composição comercial com itens, quantidade, valor unitário e desconto
-- resumo financeiro automático
-- geração automática do número da proposta quando necessário
-- salvamento de rascunho no `localStorage`
-- histórico de propostas salvas no navegador
-- geração de PDF com layout comercial
-- seção de links úteis para emissão de certidões e consultas operacionais
-- suporte a tema claro/escuro
+- interface responsiva para desktop e mobile
+- foco em usabilidade para usuários não técnicos
+- persistência local sem dependência de servidor
+- validações de campos essenciais
+- testes automatizados unitários e end-to-end
+- deploy simples com Vite e GitHub Pages
 
 ## Stack
 
@@ -39,7 +38,7 @@ Este projeto foi construído como uma interface de produto real, não apenas com
 - `ESLint`
 - `Prettier`
 
-## Estrutura do Projeto
+## Estrutura do projeto
 
 ```text
 src/
@@ -58,39 +57,29 @@ src/
   types/
   utils/
 e2e/
+.github/
 scripts/
-artifacts/
 ```
-
-### Convenções adotadas
-
-- código e nomes técnicos em inglês
-- textos da interface em português brasileiro
-- `components/ui` para primitives reutilizáveis
-- `components/forms` para blocos de formulário de negócio
-- `pages` para entry points de tela
-- `tests` para testes unitários/integrados
-- `e2e` para testes Playwright
 
 ## Requisitos
 
 - `Node.js >= 20`
 - `npm >= 10`
 
-## Como Rodar Localmente
+## Rodando localmente
 
 ```bash
 npm install
 npm run dev
 ```
 
-Aplicação disponível em:
+Aplicação local:
 
 ```bash
 http://localhost:5173
 ```
 
-## Scripts Disponíveis
+## Scripts disponíveis
 
 ### Desenvolvimento
 
@@ -114,89 +103,87 @@ npm run format:check
 
 ```bash
 npm test
-npm run test:watch
 npm run test:coverage
 npm run test:e2e
 npm run test:e2e:ui
 ```
 
-### Demo
+### Demo automatizada
 
 ```bash
 npm run record:demo
 ```
 
-Esse script grava uma demonstração automatizada do produto e salva o vídeo em:
+O vídeo é salvo em:
 
 ```bash
 artifacts/linkedin-demo.webm
 ```
 
-## Testes Automatizados
+## Privacidade e armazenamento
 
-### Unitários e integração leve
+O projeto não envia dados para servidor. As informações da proposta ficam apenas no navegador do usuário por meio de `localStorage`.
 
-Cobrem principalmente:
+Pontos importantes:
 
-- sanitização e máscaras
-- validação de dados
-- persistência local
-- comportamento do contexto principal
+- rascunhos ficam salvos localmente no navegador
+- propostas salvas também ficam apenas no navegador
+- o botão `Limpar` remove os dados locais do formulário e o histórico salvo daquele navegador
+- em dispositivos compartilhados, recomenda-se usar `Limpar` ao final do uso
 
-### End-to-end
+## Qualidade do projeto
 
-Cobrem em desktop e mobile:
+O projeto possui:
 
-- renderização da aplicação
-- preenchimento do formulário
-- atualização da prévia
-- cálculo de itens
-- máscaras de entrada
-- persistência de rascunho
-- salvamento de propostas
-- validação de link de pagamento
-- fluxo de limpeza
-- rota 404
+- tipagem com TypeScript
+- validações de dados sensíveis como CPF/CNPJ, datas e URLs `https`
+- testes unitários para utilitários, persistência e estado principal
+- testes end-to-end em desktop e mobile
+- pipeline de CI com `lint`, testes, build e E2E
 
 ## Deploy
 
-O projeto usa `Vite` com `base` configurado para produção em:
+O projeto usa `Vite` com `base` configurável por variável de ambiente.
 
-```ts
-base: mode === "production" ? "/proposta-simples/" : "/"
+Para deploy em GitHub Pages, use:
+
+```bash
+VITE_BASE_PATH=/PropostaSimples/ npm run build
 ```
 
-Se o deploy for em GitHub Pages, esse valor deve refletir o nome do repositório.
+Para deploy em domínio raiz ou preview local:
 
-Se o deploy for em domínio raiz ou ambiente próprio, ajuste conforme necessário em [vite.config.ts](/Users/alvaro/Documents/Projetos%20desenvolvidos/propostaSimples/vite.config.ts).
+```bash
+npm run build
+```
 
-## Persistência e Privacidade
+Depois, publique a pasta `dist/`.
 
-- os dados são armazenados localmente no navegador
-- nenhuma informação da proposta é enviada para backend
-- o histórico depende do armazenamento local do dispositivo/navegador
+## Observações técnicas
 
-## Observações Técnicas
+- a geração de PDF roda no navegador e concentra a parte mais pesada do bundle
+- os links externos de apoio operacional dependem de portais oficiais de terceiros
+- o histórico local não substitui armazenamento em nuvem ou multiusuário
 
-- a geração de PDF funciona no navegador e requer política CSP compatível com WebAssembly
-- o bundle de PDF ainda é o chunk mais pesado da aplicação e pode ser otimizado futuramente com carregamento sob demanda
-- alguns links úteis dependem de portais governamentais externos, que podem alterar certificados, redirecionamentos ou disponibilidade sem aviso
+## Limitações atuais
 
-## Status Atual
+- não existe autenticação
+- não existe sincronização entre dispositivos
+- não existe backend para armazenamento centralizado
+- o layout do PDF é único, sem múltiplos templates visuais
 
-No estado atual, o projeto está com:
+## Possíveis próximos passos
 
-- `lint` passando
-- `typecheck` passando
-- testes unitários passando
-- testes E2E passando
-- build de produção passando
-- gravação automatizada de demo funcionando
+- carregamento sob demanda do módulo de PDF
+- templates alternativos de proposta
+- importação e duplicação de propostas
+- exportação adicional em formatos além de PDF
+- sincronização opcional com backend no futuro
 
-## Próximos Passos Possíveis
+## Licença e uso
 
-- lazy loading do módulo de PDF
-- aumento de cobertura útil por componente
-- refinamento de acessibilidade por teclado em fluxos longos
-- exportação de proposta com templates visuais alternativos
-- sincronização em nuvem opcional no futuro
+Este repositório pode ser usado como base para estudo, portfólio e evolução do produto. Se for publicar para clientes reais, vale complementar com:
+
+- política de privacidade apropriada ao seu contexto
+- identidade visual própria
+- revisão jurídica/comercial do conteúdo padrão das propostas

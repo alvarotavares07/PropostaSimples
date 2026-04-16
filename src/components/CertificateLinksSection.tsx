@@ -55,7 +55,7 @@ const linkGroups: LinkGroup[] = [
     items: [
       {
         label: "SINTEGRA - Inscrição Estadual / SEFAZ por UF",
-        href: "http://www.sintegra.gov.br/insc_est.html",
+        href: "https://www.sintegra.gov.br/insc_est.html",
       },
     ],
   },
