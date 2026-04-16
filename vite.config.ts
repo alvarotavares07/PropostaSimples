@@ -2,12 +2,17 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
+function normalizeBasePath(basePath?: string) {
+  if (!basePath || basePath === "/") return "/";
+  const trimmed = basePath.trim().replace(/^\/+|\/+$/g, "");
+  return trimmed ? `/${trimmed}/` : "/";
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // IMPORTANT: Set this to your GitHub repo name for GitHub Pages deployment
-  // e.g. if repo is github.com/username/PropostaSimples → base: '/PropostaSimples/'
-  // For custom domain or root deploy: base: '/'
-  base: mode === "production" ? "/PropostaSimples/" : "/",
+  // Default to root so local preview and CI E2E can exercise deep SPA routes.
+  // Set VITE_BASE_PATH=/PropostaSimples/ during the GitHub Pages build.
+  base: mode === "production" ? normalizeBasePath(process.env.VITE_BASE_PATH) : "/",
 
   server: {
     host: "localhost",

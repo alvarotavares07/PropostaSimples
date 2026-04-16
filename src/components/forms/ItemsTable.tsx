@@ -44,7 +44,7 @@ function ItemRow({
 
   return (
     <li className="rounded-2xl border border-border/70 bg-background/80 p-4 shadow-[inset_0_1px_0_hsl(0_0%_100%/0.35)]">
-      <div className="mb-4 flex items-start justify-between gap-3">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="section-kicker">Item {index + 1}</p>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -57,7 +57,7 @@ function ItemRow({
           size="icon"
           onClick={() => dispatch({ type: "REMOVE_ITEM", id: item.id })}
           aria-label={`Remover item ${index + 1}: ${item.description || "sem descrição"}`}
-          className="h-10 w-10 text-destructive hover:bg-destructive/10 hover:text-destructive"
+          className="relative z-10 h-10 w-10 shrink-0 self-end text-destructive hover:bg-destructive/10 hover:text-destructive sm:self-start"
         >
           <Trash2 className="h-4 w-4" aria-hidden />
         </Button>

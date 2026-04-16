@@ -63,6 +63,7 @@ jobs:
       - run: npm run build
         env:
           NODE_ENV: production
+          VITE_BASE_PATH: /PropostaSimples/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/
@@ -94,6 +95,8 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run build
+        env:
+          NODE_ENV: production
       - run: npx vite preview &
       - run: npx wait-on http://localhost:4173
       - run: npm run test:e2e
